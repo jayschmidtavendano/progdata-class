@@ -3,9 +3,7 @@ title: "README.md"
 output: html_document
 ---
 ## Jason R. Schmidt Avendaño
-
-![alt text]()
-
+![Lab Website](https://emac-usf.com/)
 ---
 ### Introduction
 My name is **Jason R. Schmidt Avendaño**. I happily represent my fellow LatinX and LGBTQIA+ communities as a Panamanian who speaks fluent Spanish. I am often spending time outside of work: 
