@@ -1,0 +1,28 @@
+---
+title: "Lab 1"
+output: Word_document
+---
+
+```{r, setup}
+library(dplyr)
+library(easystats)
+library(tidyverse)
+```
+
+```{r, data}
+dat_peng <- palmerpenguins::penguins
+##Assigns the palmerpenguins data set to the name "dat_peng"
+
+dplyr::glimpse(dat_peng)
+##Understand the variables and description of the overall data. Helps with overall reporting of rows and columns of the data set. 
+head(dat_peng)
+##Shows the first six rows of data in the entire set
+```
+
+
+```{r, Vizzy data}
+describe_distribution(dat_peng) %>%
+  print_md()
+##Similar to the glimpse function but uses a better table system for easier vizzy. 
+```
+

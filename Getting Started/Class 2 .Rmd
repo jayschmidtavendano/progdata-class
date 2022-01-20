@@ -1,0 +1,127 @@
+---
+title: "Class 2"
+output: html_document
+---
+
+```{r, Fav Number assingment}
+fav_number <- 21
+```
+
+```{r, Vector Example}
+times <- c(6, 9, 8, 5, 7.5, 6.4, 6, 2.5, 5, 4, 7.5, 8, 8)
+
+times
+mean(times)
+
+##when adding one to the vector R believe that everything after is also a character vector
+```
+
+```{r, times modfication}
+minutes <- 60 * times
+minutes
+```
+
+```{r}
+rep(1:13)
+1:13
+
+rep(1:13) * 1:13
+
+##This is taking the list of 1:13 and multiplying it by 1:13 by matching. Thus 1times1, 5times5, 12times12. The "rep" function is a repeating function. If the list are not the same lengths you do not want to multiple them, the list will repeat. 
+```
+
+```{r, mean of times}
+mean(times)
+?mean
+```
+
+```{r, Mean w/missing value}
+mean(c(times, NA))
+
+mean(c(times, NA), na.rm = TRUE)
+
+##By adding na.rm = TRUE we were able to tell R to caluculate the mean despite there being a NA value. 
+```
+
+```{r, Example of functions}
+sd(times)
+range(times)
+length(times)
+```
+
+```{r, Comparisions of sleep}
+times < 6
+
+## less than - <
+## greater than - >
+## Equal to - =
+## Less Than or Equal to - <= 
+## Greaer Than or Equal to - >=
+## Not Equal to - != 
+## what is == - 
+
+##$$Multiple comparisons
+## & = AND, | = OR, ! = NOT
+
+##$$Other functions
+##any() is a function that looks at if any of the values are TRUE or FALSE or another ask like a value. 
+##all() is a function that looks at if all the values are something like "TRUE" or "6"
+##which idetifies, which values are what you are asking. Which values are less than 6
+ which(times < 6)
+ times
+```
+
+```{r}
+times[1]
+times[-1]
+##This drops of the first number in the vector than contiunues operation, 
+times[4:8]
+##This will give us the 4th through the 8th value in the times vector
+times[times >= 7]
+```
+
+```{r}
+which(times >= 7)
+
+```
+
+```{r, subset}
+times2 <- c(times, NA)
+##how do you subset to drop all missing values
+is.na(times2)
+times2[is.na(times2)]
+times2[!is.na(times2)]
+##This last run code creates a new vector with all the values that are not NA, this is achieved by the "!"
+na.omit(times2)
+##This is a better fucntion to use on a whole data set
+```
+
+```{r, Modyifying a data set}
+times[2] <- NA
+times
+##This is saying what ever is in the 2nd position of the times vector, replace it with an NA 
+times[times > 5] <- NA
+```
+
+```{r, Data Frames}
+##Think of it like a excell sheet. Each row is refereing to the same person, each column is a varaible for that person
+
+head(mtcars)
+##First 6 values
+tail(mtcars)
+##Last 6 values
+str(mtcars)
+##
+mtcars$cyl
+##This pulls up only the colmun (variable) intrested in for the data frame
+```
+
+```{r, CArs }
+mpg_mean <- mean(mtcars$mpg)
+mpg_mean
+```
+
+```{r}
+getwd()
+```
+
