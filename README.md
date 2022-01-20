@@ -12,5 +12,5 @@ I am a professional singer who works as a cantor at a local church as well as a 
 
 ### Follow Me
 **My Social Media** 
-1. [Twitter](https://www.https.://twitter.com/_jasonschmidt)
-2. [Personal Website](https://www.https.://jasonschmidt6.wixsite.com/jason)
+1. [Twitter](https://twitter.com/_jasonschmidt)
+2. [Personal Website](https://jasonschmidt6.wixsite.com/jason)
