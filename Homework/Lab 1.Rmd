@@ -26,3 +26,10 @@ describe_distribution(dat_peng) %>%
 ##Similar to the glimpse function but uses a better table system for easier vizzy. 
 ```
 
+```{r, Vizzy Scatter Plot}
+ggplot(data = dat_peng, 
+       mapping = aes(x = bill_depth_mm, fill = sex)) +
+  geom_histogram(alpha = 0.6, position = 'identity')
+##This is a graph showing the count of bill_depth filled (colored(grouped)) by the sex of the penguin. 
+```
+
