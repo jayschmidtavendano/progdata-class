@@ -2,7 +2,7 @@
 ![Lab Website](https://cdn.aarp.net/content/dam/aarp/travel/tips/2020/12/1140-las-vegas-sign.jpg)
 
 ### Introduction
-My name is **Jason R. Schmidt Avendaño**. I happily represent my fellow LatinX and LGBTQIA+ communities as a Panamanian who speaks fluent Spanish. I am often spending time outside of work: 
+My name is **Jason R. Schmidt Avendaño**. I was born in Las Vegas and have moved around as a military child my entire life. I happily represent my fellow LatinX and LGBTQIA+ communities as a Panamanian who speaks fluent Spanish. I am often spending time outside of work: 
   * Playing with my dog
   * Rollerblading
   * Paddle Boarding
