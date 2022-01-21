@@ -1,4 +1,5 @@
 ---
+name: "Jason R. Schmidt Avendaño"
 title: "Lab 1"
 output: Word_document
 ---
