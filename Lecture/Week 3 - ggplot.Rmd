@@ -1,0 +1,73 @@
+---
+title: "ggplot"
+output: html_document
+---
+
+```{r, Setup}
+library(easystats)
+library(tidyverse)
+library(gapminder)
+```
+
+```{r, Data}
+gapminder
+plot(airquality)
+##plot allows us to simply visualize the data 
+```
+
+
+#data
+  This is the data that you are feeding into the plot 
+#aesthetic mapping 
+  How are variables in the data connecting to a visual dimension
+      x and y positioning, color fill, shape, line type, size, transperancy, etc. 
+#Geometric objects
+  What are the objects actually drawn on the plot? 
+      points, bars, lines, density, etc. 
+#Scales
+  How is a varaible mapped to its asethtic? 
+      Is it linear, log scale, etc.? 
+#Stats transformations 
+  How the data are combined/transformed before plotting 
+      Bar chart = data transformed into frequencies 
+#Facet
+  Breaking up the data in to panels, "sub plots" 
+  
+```{r, Grammar of Graphics Example #1}
+ggplot(gapminder)
+```
+
+```{r empty graph}
+ggplot(gapminder) +
+  aes(x = gdpPercap, y = lifeExp)
+```
+
+```{r, coordinates}
+ggplot(gapminder) +
+  aes(x = gdpPercap, y = lifeExp) + 
+  geom_point()
+```
+
+```{r, color}
+ggplot(gapminder) +
+  aes(x = gdpPercap, y = lifeExp) + 
+  geom_point(color = "dark orange")
+```
+
+```{r, alpha}
+ggplot(gapminder) +
+  aes(x = gdpPercap, y = lifeExp) + 
+  geom_point(color = "dark orange", alpha = .15)
+```
+
+```{r, scale}
+ggplot(gapminder) +
+  aes(x = gdpPercap, y = lifeExp) + 
+  geom_point(color = "dark orange", alpha = .15) + 
+  scale_x_continuous(
+    name = "GDP per capita", 
+    trans = "log10", 
+    labels = scales::dollar_format()
+  )
+```
+
