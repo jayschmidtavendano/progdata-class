@@ -19,21 +19,50 @@ plastic_waste <- read.csv(here::here("Data", "plastic_waste.csv"))
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
+Africa & Asia seem to have the most plastic waste per capita, followed by a moderate amount in Europe & North America, with the least in Oceania & South America. This visualization is not very clear. 
 
 ```{r plastic-waste-continent}
-# insert code here
+ggplot(plastic_waste) + 
+  aes(x = plastic_waste_per_cap) + 
+  geom_histogram() + 
+  facet_wrap(~continent)
 ```
+
+
+
+
 
 ### Exercise 2
 
 ```{r plastic-waste-density}
-# insert code here
+ggplot(plastic_waste) + 
+  aes(x = plastic_waste_per_cap) + 
+  geom_density(aes(y = after_stat(count))) + 
+  facet_wrap(~continent)
 ```
+
+```{r, density plot colored}
+ggplot(plastic_waste) + 
+  aes(x = plastic_waste_per_cap, color = continent) + 
+  geom_density(aes(y = after_stat(count))) 
+```
+
+```{r}
+ggplot(plastic_waste) + 
+  aes(x = plastic_waste_per_cap, color = continent, fill = continent) + 
+  geom_density(aes(y = after_stat(count))) 
+```
+
+```{r}
+ggplot(plastic_waste) + 
+  aes(x = plastic_waste_per_cap, color = continent, fill = continent) + 
+  geom_density(alpha = .25) 
+```
+
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 3 here.
+Fill and color go in aes because the is a global change, that causes the variables to be mapped on all variables in graph. For alpha we only want it to effect the density portion of our graph.
 
 ### Exercise 4
 
