@@ -25,4 +25,4 @@ STEM field and music cognition and perception research.
 **My Social Media** 
 1. [Twitter](https://twitter.com/_jasonschmidt)
 2. [Personal Website](https://jasonschmidt6.wixsite.com/jason)
-3. [Lab Website](https://https://emac-usf.com/)
+3. [Lab Website](https://emac-usf.com/)
