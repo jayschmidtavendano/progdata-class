@@ -19,7 +19,7 @@ I am a first-year graduate student in the CNS program at *The University of Sout
   * Understanding the pathway and importance of music research’s ability to continually innovate the
 healthcare, public policy, and community sectors.
   * Identifying and incorporating factors of diversity, equity, and inclusion into all facets of the
-STEM field and music cognition and perception research.
+STEM field and music cognition research.
 
 ### Follow Me
 **My Social Media** 
