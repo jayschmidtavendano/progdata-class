@@ -15,7 +15,6 @@ library(tidyverse)
 plastic_waste <- read.csv(here::here("Data", "plastic_waste.csv"))
 ```
 
-## Exercises
 
 ### Exercise 1
 
@@ -27,10 +26,6 @@ ggplot(plastic_waste) +
   geom_histogram() + 
   facet_wrap(~continent)
 ```
-
-
-
-
 
 ### Exercise 2
 
@@ -69,52 +64,9 @@ Fill and color go in aes because the is a global change, that causes the variabl
 Remove this text, and add your answer for Exercise 4 here.
 
 ```{r plastic-waste-violin}
-# insert code here
-```
+ggplot(plastic_waste) + 
+  aes(x = continent, y = plastic_waste_per_cap, fill = continent) +   geom_boxplot()
 
-### Exercise 5
-
-Remove this text, and add your answer for Exercise 5 here.
-
-```{r plastic-waste-mismanaged}
-# insert code here
-```
-
-### Exercise 6
-
-Remove this text, and add your answer for Exercise 6 here.
-
-```{r plastic-waste-mismanaged-continent}
-# insert code here
-```
-
-### Exercise 7
-
-Remove this text, and add your answer for Exercise 7 here.
-
-```{r plastic-waste-population-total}
-# insert code here
-```
-
-```{r plastic-waste-population-coastal}
-# insert code here
-```
-
-### Exercise 8
-
-Remove this text, and add your answer for Exercise 8 here.
-
-```{r recreate-viz}
-# insert code here
-```
-
-## Pro-Tips
-
-### Excercise 3
-
-Try this :D
-
-```
 ggplot(data = plastic_waste, 
        mapping = aes(x = continent, 
                      y = plastic_waste_per_cap)) +
@@ -123,9 +75,51 @@ ggplot(data = plastic_waste,
   stat_summary(fun.y=median, geom="point") 
 ```
 
-### Exercise 5 
+```{r}
+ggplot(plastic_waste) + 
+  aes(x = continent, y = plastic_waste_per_cap, fill = continent) +   geom_boxplot() + geom_jitter()
+```
 
-Helpful reference:http://www.sthda.com/english/wiki/ggplot2-themes-and-background-colors-the-3-elements
+```{r}
+ggplot(plastic_waste) + 
+  aes(x = continent, y = plastic_waste_per_cap, fill = continent) +   geom_boxplot() + geom_jitter() +
+  ggdist::stat_slab(height = .3,
+                    color = "black",
+                    size = .2,
+                    alpha = .5,
+                    position = position_nudge (y = .5))
+```
 
+It shows a better estimation of where the individual countries data lies. 
 
+### Exercise 5
 
+Looking at this graph alone there appears to be no relationship. Possibly as mismanaged plastic goes up plastic waste per capita is increasing, however that can not be stated with confidence. 
+
+```{r plastic-waste-mismanaged}
+ggplot(plastic_waste) + 
+  aes(y = plastic_waste_per_cap, x = mismanaged_plastic_waste_per_cap) + geom_point()
+```
+
+### Exercise 6
+
+This gragh does not entirely help visualize the data in a consumable fashion. Europe seems to be cluster near 0 whereas the other countries have outliers in terms of mismanaged plastic. 
+
+```{r plastic-waste-mismanaged-continent}
+ggplot(plastic_waste) + 
+  aes(y = plastic_waste_per_cap, x = mismanaged_plastic_waste_per_cap, color = continent) + geom_point()
+```
+
+### Exercise 7
+
+Based solely on the trend line ribbon, I believe the coastal population to have a stronger association with plastic waste per capita than the total population parameter. The ribbion for coastal shows a narrower confidence interval which allows for less variability in the amount of variance for the true mean. 
+
+```{r plastic-waste-population-total}
+ggplot(plastic_waste) + 
+  aes(y = plastic_waste_per_cap, x = total_pop) + geom_point() + geom_smooth()
+```
+
+```{r plastic-waste-population-coastal}
+ggplot(plastic_waste) + 
+  aes(y = plastic_waste_per_cap, x = coastal_pop) + geom_point() + geom_smooth()
+```
