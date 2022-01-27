@@ -1,0 +1,54 @@
+---
+title: "Lecture 3"
+output: html_document
+---
+
+```{r, load}
+library(tidyverse)
+library(tsibble)
+```
+
+
+```{r, data frame}
+(mauna <- tsibble::as_tsibble(co2) %>% 
+   rename(month = index, conc = value))
+```
+
+```{r, plot mauna}
+ggplot(mauna) +
+  aes(x = month, y = conc) +
+  geom_line() + 
+  tsibble::scale_x_yearmonth()
+```
+
+```{r, specfiy color in geom_point = 1 line}
+dat_peng <- palmerpenguins::penguins
+
+ggplot(dat_peng) +
+  aes(x = body_mass_g, y = bill_depth_mm) +
+  geom_point(aes(color = species)) + 
+  geom_smooth()
+##Color only applys to geom_point
+```
+
+```{r, specfiy color in aes cuases 3 lines}
+ggplot(dat_peng) +
+  aes(x = body_mass_g, y = bill_depth_mm, color = species) +
+  geom_point() + 
+  geom_smooth()
+##since its in aes than in changes all layers of the grapgh, its global. 
+```
+
+```{r, can assing the plot to a name "p"}
+p <- ggplot(mauna) + 
+  aes(x = month, y = conc) +
+  geom_line() + 
+  tsibble::scale_x_yearmonth()
+print(p)
+##Once the plot is assigned to a name, you can just call the name of p and modify it. So basically just adding to the already done foundations. 
+
+
+p + 
+  geom_smooth(color = "pink")
+```
+
