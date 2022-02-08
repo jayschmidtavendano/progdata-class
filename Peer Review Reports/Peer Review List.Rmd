@@ -5,3 +5,5 @@ output: html_document
 
 When you are in the issues panel of github, copy the link of the issue (peer review) that you made and paste it below. This functions as a running list of the reviews i have made. 
 
+https://github.com/cassrichardson/progdata-class/issues/1#issue-1122075340
+https://github.com/judesullivan/progdata-class/issues/1#issue-1122042887
