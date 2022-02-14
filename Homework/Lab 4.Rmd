@@ -1,0 +1,105 @@
+---
+title: "Lab 4"
+author: "Jason R. Schmidt Avendano"
+date: !r format(Sys.Date())
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, load}
+library(tidyverse)
+```
+
+```{r, Data}
+dat_gdata <- read_csv(here::here("Data", "green_data.csv"))
+dat_gdic <- read_csv(here::here("Data", "green_dictionary.csv"))
+```
+
+```{r, Glimpse}
+dat_gdata %>% 
+  glimpse()
+
+dat_gdic %>% 
+  glimpse()
+```
+
+
+Inspect the item responses (e.g., with graphs or by summarizing distinct values). Is anything unusual?
+
+```{r, Recode}
+dat_gdata %>%
+  mutate(
+    green2 = recode(green2, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+    comp6 = recode(comp6, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+    comp7 = recode(comp7, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+    comp8 = recode(comp8, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+    comp9 = recode(comp9, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+    comp10 = recode(comp10, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1), 
+    intel7 = 6 - intel7, 
+    intel7 = 6 - intel7, 
+    intel7 = 6 - intel7, 
+    intel7 = 6 - intel7, 
+    intel7 = 6 - intel7, 
+    intel7 = 6 - intel7, 
+    )
+```
+
+
+```{r, Inspect}
+dat_gdata %>%
+  rowwise() %>% 
+  mutate(
+    id = id,
+    green_total = mean(c_across(green1:green5), na.rm = TRUE),
+    comp_total = mean(c_across(comp1:comp5), na.rm = TRUE),
+    intel_total = mean(c_across(intel1:intel5), na.rm = TRUE),
+    open_total = mean(c_across(open1:open5), na.rm = TRUE),
+    .before = everything()
+  )
+
+ggplot(data = dat_gdata,
+       mapping = aes(x = green_total)) +
+  geom_histogram()
+
+print(dat_gdata)
+```
+
+
+Compute total scores for the four scales. Recode variables as needed.
+```{r, Total Scores}
+
+```
+
+
+Rescale the variables so that they go from 0-100 instead of the original range. Name the recaled variables *_pomp.
+```{r, Rescale}
+
+```
+
+
+Make plots that illustrate the distributions of the 4 POMP-scored variables.
+```{r, Plots}
+
+```
+
+
+Make scatterplots showing the relationships between green reputation and each personality trait. Include trend lines for students and non-students. What do these plots show?
+```{r, Scatterplots}
+
+```
+
+
+Compare green reputation for students and non-students using a rainfall plot (bar + density + data points).
+```{r, Compare}
+
+```
+
+
+Compute a summary table of means, SDs, medians, minima, and maxima for the four total scores for students and non-students.
+```{r, Compute}
+
+```
+
