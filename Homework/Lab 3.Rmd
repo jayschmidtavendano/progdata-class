@@ -24,46 +24,80 @@ Use dplyr functions to achieve the following. For each exercise, print your resu
 
 24.2.1 1.1
 Use filter() to subset the gapminder data to three countries of your choice in the 1970’s.
-
-```{r}
-print(dat_gap)
-
-dat_gap %>% 
-  filter((country %in% c("Mexico","Asia","Bahrain") & year == 1970-1979))
+# Exercise 1
+## 1.1
+```{r filter countries in the 70's}
+gapminder %>%
+  filter(country %in% c("Spain", "Sweden", "France") & year == 1970 : 1979)
 ```
 
+## 1.2
+```{r}
+gapminder %>%
+  filter(country %in% c("Spain", "Sweden", "France") & year == 1970 : 1979) %>%
+  select(country, gdpPercap)
+```
 
+## 1.3
+```{r change in life expectancy}
+new_gap <- gapminder %>%
+  mutate(lifeExp_change = lifeExp - lag(lifeExp)) %>%
+  filter(lifeExp_change < 0) %>%
+  arrange(lifeExp_change)
 
-24.2.2 1.2
-Start with the original gapminder data and use the pipe operator |> to first do the above filter and then select the “country” and “gdpPercap” variables.
+new_gap
+```
+## 1.4
+```{r max GDP}
+gapminder %>%
+  group_by(country) %>%
+  mutate(maxGDP = max(gdpPercap)) %>%
+  filter(maxGDP == gdpPercap)
+```
 
-24.2.3 1.3
-Make a new variable in gapminder for the change in life expectancy from the previous measurement for that country. Filter this table to show all of the entries that have experienced a drop in life expectancy. Save this result as a new object.
+## 1.5
+```{r}
+canada <- gapminder %>%
+  filter(country == "Canada")
 
-Hint: you might find the lag() or diff() functions useful.
+ggplot(data = canada,
+  mapping = aes(x = lifeExp, y = log(gdpPercap))) +
+  geom_point()
+```
+## 2.1
+```{r load penguins}
+dat_penguins <- palmerpenguins::penguins
+head(dat_penguins)
+```
 
-24.2.4 1.4
-Filter gapminder so that it shows the max GDP per capita experienced by each country.
+```{r penguins}
+dat_penguins %>%
+  summarize(mean(flipper_length_mm, na.rm = TRUE), mean(body_mass_g, na.rm = TRUE), range(flipper_length_mm, na.rm = TRUE), range(body_mass_g, na.rm = TRUE))
+```
+```{r plot penguins}
+penguinPlot <- ggplot(data = dat_penguins,
+       mapping = aes(x = body_mass_g,
+                     y = flipper_length_mm)) +
+  geom_point()
 
-Hint: you might find the max() function useful here.
+penguinPlot
+```
 
-24.2.5 1.5
-Produce a scatterplot of Canada’s life expectancy vs. GDP per capita using ggplot2.
+## 2.2
+```{r more penguins}
+dat_penguins%>%
+  group_by(sex) %>%
+  summarize(mean(flipper_length_mm, na.rm = TRUE), range(body_mass_g, na.rm = TRUE))
+```
+```{r plot more penguins}
+ggplot(dat_penguins) +
+  aes(x = sex, y =  body_mass_g, fill = sex) +
+  geom_boxplot() +
+  geom_jitter() +
+  ggdist::stat_slab(height = .3,
+                    color = "black",
+                    size = .2,
+                    alpha = .5,
+                    position = position_nudge(y = .5))
+```
 
-In your plot, put GDP per capita on a log scale.
-
-24.3 Exercise 2: Explore two variables with dplyr and ggplot2
-Use gapminder, palmerpenguins::penguins, or another dataset of your choice. (Check out a dataset from the datasets or psych R package if you want!
-
-24.3.1 2.1
-Pick two quantitative variables to explore.
-
-Make a summary table of descriptive statistics for these variables using summarize().
-Include whatever staistics you feel appropriate (mean, median sd, range, etc.).
-Make a scatterplot of these variables using ggplot().
-24.3.2 2.2
-Pick one categorical variable and one quantitative variable to explore.
-
-Make a summary table giving the sample size (hint: n()) and descriptive statistics for the quantitative variable by group.
-Make one or more useful plots to visualize these variables.
-Try to make a raincloud plot with points, boxplots, and densities for each group.
