@@ -1,0 +1,37 @@
+---
+title: "Week 5 Day 2 _ Advanced Dplyr"
+output: html_document
+---
+
+```{r, load}
+library(gapminder)
+library(tidyverse)
+library(psychTools)
+```
+
+```{r, Data}
+dat_gap <- gapminder
+dat_bfi <- psychTools::bfi
+```
+
+```{r}
+dat_bfi <- psychTools::bfi %>%
+  rownames_to_column(var = ".id")
+```
+
+```{r, rowwise}
+dat_bfi %>% 
+  rowwise() %>% #treat every row of data as a separate group
+  mutate(
+  .id = .id,
+  A_total = mean(c_across(A1:A5), na.rm = TRUE), #Makes a vector, treating each row as a group and then calculate a mean. 
+    C_total = mean(c_across(C1:C5), na.rm = TRUE),
+    E_total = mean(c_across(E1:E5), na.rm = TRUE),
+    N_total = mean(c_across(N1:N5), na.rm = TRUE),
+    O_total = mean(c_across(O1:O5), na.rm = TRUE),
+    .before = everything() #puts the new columns (mutate) before everything
+  ) %>%
+  head() %>% 
+  ungroup() #This should always be done after any group_by or rowwise function. 
+```
+

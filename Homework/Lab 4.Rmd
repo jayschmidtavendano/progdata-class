@@ -1,0 +1,180 @@
+---
+title: "Lab 4"
+author: "Jason R. Schmidt Avendano"
+date: !r format(Sys.Date())
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, load}
+library(tidyverse)
+```
+
+```{r, Data}
+dat_gdata <- read_csv(here::here("Data", "green_data.csv"))
+dat_gdic <- read_csv(here::here("Data", "green_dictionary.csv"))
+```
+
+Inspect the item responses (e.g., with graphs or by summarizing distinct values). Is anything unusual?
+
+```{r, Q1a}
+dat_gdata %>% 
+  glimpse()
+
+dat_gdic %>% 
+  glimpse()
+```
+
+```{r, Q1b}
+dat_gdata %>% 
+  select(-id) %>% 
+  unlist() %>% 
+  unique() ##This allows us to look only at the response values since we took id out, and see which values are unique
+
+```
+
+```{r, Q1c}
+dat_gdata %>% 
+  mutate(
+    across(
+      -id, 
+      function(x) recode(x, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5, "-99" = NA_real_)
+    )
+  )
+
+```
+
+```{r, Q1d}
+dat_gdata <- dat_gdata %>% 
+  mutate(
+    across(
+      -id, 
+      function(x) na_if(x, -99)
+    )
+  )
+```
+
+Compute total scores for the four scales. Recode variables as needed.
+
+```{r, Q2a}
+reversed <- dat_gdic %>% 
+  filter(Keying == -1) %>% 
+  pull(Item) ##This just puts it in a vector, so a list of all the items. If you want this to be in a table 
+```
+
+
+```{r, Q2b}
+
+reverse_item <- function(x) (
+  recode(x, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1)
+)
+
+dat_gdata <- dat_gdata %>% 
+  mutate(
+    across(
+      all_of(reversed),
+      reverse_item
+    )
+  )
+
+##This was the long way, above is the efficient way to do it across all columns
+
+# dat_gdata %>%
+#   mutate(
+#     green2 = recode(green2, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+#     comp6 = recode(comp6, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+#     comp7 = recode(comp7, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+#     comp8 = recode(comp8, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+#     comp9 = recode(comp9, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1),
+#     comp10 = recode(comp10, "1" = 5, "2" = 4, "3" = 3, "4" = 2, "5" = 1), 
+#     intel7 = 6 - intel7, 
+#     intel8 = 6 - intel8, 
+#     intel9 = 6 - intel9, 
+#     intel10 = 6 - intel10, 
+#     open7 = 6 - open7, 
+#     open8 = 6 - open8, 
+#     open9 = 6 - open9, 
+#     open10 = 6 - open10
+#     )
+```
+
+```{r, Q2c}
+dat_gdata <- dat_gdata %>%
+  rowwise() %>% 
+  mutate(
+    id = id,
+    green_total = mean(c_across(green1:green5), na.rm = TRUE),
+    comp_total = mean(c_across(comp1:comp10), na.rm = TRUE),
+    intel_total = mean(c_across(intel1:intel10), na.rm = TRUE),
+    open_total = mean(c_across(open1:open10), na.rm = TRUE),
+    .before = everything()
+  )
+
+ggplot(data = dat_gdata,
+       mapping = aes(x = green_total)) +
+  geom_histogram()
+
+print(dat_gdata)
+```
+
+Rescale the variables so that they go from 0-100 instead of the original range. Name the recaled variables *_pomp.
+```{r, Rescale}
+dat_gdata <- dat_gdata %>% 
+  mutate(
+    across(
+      green_total:open_total, 
+      function(x) datawizard::change_scale(x, range(1,5), to = c(0, 100)), 
+      .names = "{.col}_pomp"
+    ), 
+    .after = open_total
+  )
+
+print(dat_gdata)
+```
+
+
+Make plots that illustrate the distributions of the 4 POMP-scored variables.
+```{r, Plots}
+ggplot(data = dat_gdata,
+       mapping = aes(x = green_total_pomp)) +
+  geom_histogram()
+
+ggplot(data = dat_gdata,
+       mapping = aes(x = comp_total_pomp)) +
+  geom_histogram()
+
+ggplot(data = dat_gdata,
+       mapping = aes(x = intel_total_pomp)) +
+  geom_histogram()
+
+ggplot(data = dat_gdata,
+       mapping = aes(x = open_total_pomp)) +
+  geom_histogram()
+```
+
+
+Make scatterplots showing the relationships between green reputation and each personality trait. Include trend lines for students and non-students. What do these plots show?
+```{r, Scatterplots}
+dat_gdata %>%
+  drop_na(student) %>%
+ggplot() + 
+    aes(x = open_total_pomp, y = green_total_pomp, color = factor(student)) +
+  geom_point() + 
+  geom_smooth(method = lm)
+```
+
+
+Compare green reputation for students and non-students using a rainfall plot (bar + density + data points).
+```{r, Compare}
+
+```
+
+
+Compute a summary table of means, SDs, medians, minima, and maxima for the four total scores for students and non-students.
+```{r, Compute}
+
+```
+
