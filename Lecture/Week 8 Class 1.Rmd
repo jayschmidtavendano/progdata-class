@@ -1,0 +1,27 @@
+---
+title: "Lecture 7"
+output: html_document
+---
+
+```{r}
+library(gapminder)
+library(tidyverse)
+```
+
+```{r}
+gap_asia_2007 <- gapminder %>% 
+  filter(year == 2007, continent == "Asia")
+```
+
+```{r}
+write_csv(gap_asia_2007, here::here("data", "gap_asia_2007.csv") 
+          )
+```
+
+```{r}
+dat <- read_csv(
+  here::here(
+    "data", "gap_asia_2007.csv")
+  )
+```
+

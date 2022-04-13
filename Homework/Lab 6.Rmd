@@ -1,0 +1,90 @@
+---
+title: "Lab 6"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+34.1 Exercise 1: singer
+The package singer comes with two smallish data frames about songs. Let’s take a look at them (after minor modifications by renaming and shuffling):
+
+You can download the singer data from the class repo:
+```{r}
+songs <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/songs.csv")
+locations <- read_csv("https://raw.githubusercontent.com/bwiernik/progdata-class/master/data/singer/loc.csv")
+
+(time <- as_tibble(songs) %>%
+   rename(song = title))
+
+(album <- as_tibble(locations) %>% 
+   select(title, everything()) %>% 
+   rename(album = release,
+          song  = title))
+```
+
+We really care about the songs in time. But, for which of those songs do we know its corresponding album?
+```{r}
+time %>% 
+  left_join(
+    album, 
+    by = c("song", "artist_name")
+    )
+```
+
+
+Which songs do we have “year”, but not album info?
+```{r}
+time_2 <- time_1 %>% 
+  anti_join(album, by = "song")
+```
+##Corduroy, Martin_Doom!It's Seven O'Clock, Leaves And Sand, Comb Your Hair, Mine Again, Don't Forget About Us, Babydoll, and Vision of Love.
+
+
+Which artists are in time, but not in album?
+```{r}
+time %>% 
+  anti_join(album, by = "artist_name")
+```
+##Mariah Carey
+
+You’ve come across these two tibbles, and just wish all the info was available in one tibble. What would you do?
+```{r}
+album_time <- album %>% 
+  left_join(time, by = "song")
+```
+
+
+34.2 Exercise 2: LOTR
+Load in three tibbles of data on the Lord of the Rings:
+```{r}
+fell <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
+ttow <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
+retk <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
+```
+
+```{r}
+glimpse(fell)
+glimpse(ttow)
+glimpse(retk)
+```
+
+Stack these into a single tibble.
+```{r, 2Q1}
+bind_rows(
+  fell, ttow
+)
+bind_cols(
+  fell, ttow
+)
+```
+## 2. Which races are present in “The Fellowship of the Ring” (fell), but not in any of the other ones?
+```{r, 2Q2}
+fell %>% 
+  anti_join(ttow, by = "Race") %>% 
+  anti_join(retk, by = "Race")
+```
+
+
+
