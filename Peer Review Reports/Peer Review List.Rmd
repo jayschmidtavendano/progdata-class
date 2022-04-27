@@ -7,3 +7,6 @@ When you are in the issues panel of github, copy the link of the issue (peer rev
 
 https://github.com/cassrichardson/progdata-class/issues/1#issue-1122075340
 https://github.com/judesullivan/progdata-class/issues/1#issue-1122042887
+https://github.com/aeperusse/progdata-class/issues/3 
+https://github.com/sabeisenberg/progdata-class/issues/7
+https://github.com/reupton/progdata-class/issues/6
